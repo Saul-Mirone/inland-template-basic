@@ -229,11 +229,16 @@ template/
     ]
 
     for (const article of sampleArticles) {
-      await fs.writeFile(
-        path.join(CONTENT_DIR, article.filename),
-        article.content,
-        'utf-8'
-      )
+      const filePath = path.join(CONTENT_DIR, article.filename)
+      const fileExists = await fs.access(filePath).then(() => true).catch(() => false)
+      
+      if (!fileExists) {
+        await fs.writeFile(
+          filePath,
+          article.content,
+          'utf-8'
+        )
+      }
     }
     
     console.log('📝 Created sample articles')
