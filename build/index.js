@@ -9,7 +9,7 @@ import fs from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { TemplateEngine } from './template-engine.js'
-import { copyAssets, ensureDir, formatDate, parseMarkdownFile } from './utils.js'
+import { copyAssets, ensureDir, formatDate } from './utils.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT_DIR = path.join(__dirname, '..')
