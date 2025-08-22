@@ -4,7 +4,6 @@
 
 import fs from 'fs/promises'
 import path from 'path'
-import fm from 'front-matter'
 
 export async function ensureDir(dirPath) {
   try {
@@ -44,28 +43,4 @@ export function formatDate(dateString) {
     month: 'long',
     day: 'numeric'
   })
-}
-
-export async function parseMarkdownFile(content, filename) {
-  const parsed = fm(content)
-  const slug = filename.replace(/\.(md|html)$/, '')
-  
-  return {
-    slug,
-    frontmatter: parsed.attributes,
-    html: `<pre style="white-space: pre-wrap; font-family: inherit;">${escapeHtml(parsed.body)}</pre>`,
-    isCompiled: false
-  }
-}
-
-function escapeHtml(text) {
-  const map = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#039;'
-  }
-  
-  return text.replace(/[&<>"']/g, (m) => map[m])
 }

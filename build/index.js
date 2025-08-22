@@ -84,7 +84,7 @@ class BlogBuilder {
       }
 
       const files = await fs.readdir(CONTENT_DIR)
-      const contentFiles = files.filter(file => file.endsWith('.md') || file.endsWith('.html'))
+      const contentFiles = files.filter(file => file.endsWith('.html'))
       
       const articles = []
       
@@ -93,14 +93,8 @@ class BlogBuilder {
           const filePath = path.join(CONTENT_DIR, file)
           const content = await fs.readFile(filePath, 'utf-8')
           
-          let article
-          if (file.endsWith('.html')) {
-            // Pre-compiled HTML files (from milkdown compiler)
-            article = await this.parseCompiledArticle(content, file)
-          } else {
-            // Raw markdown files (fallback for development)
-            article = await parseMarkdownFile(content, file)
-          }
+          // All content files should be pre-compiled HTML from milkdown compiler
+          const article = await this.parseCompiledArticle(content, file)
           
           if (article.frontmatter.status === 'published') {
             articles.push(article)
