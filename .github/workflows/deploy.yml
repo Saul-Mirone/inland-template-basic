@@ -27,20 +27,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
         
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'pnpm'
           
       - name: Install dependencies
-        run: npm ci
-        
+        run: pnpm install --frozen-lockfile
+
       - name: Compile markdown with milkdown
         run: |
           echo "🔄 Compiling markdown files with milkdown..."
-          npm run compile:markdown
+          pnpm run compile:markdown
           echo "✅ Milkdown compilation completed"
           
       - name: Upload compiled content
@@ -56,6 +61,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
         
       - name: Download compiled content
         uses: actions/download-artifact@v4
@@ -67,14 +77,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'pnpm'
           
       - name: Install dependencies
-        run: npm ci
-        
+        run: pnpm install --frozen-lockfile
+
       - name: Build static site
-        run: npm run build
-        
+        run: pnpm run build
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
         
