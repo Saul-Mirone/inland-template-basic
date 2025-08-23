@@ -88,11 +88,8 @@ class MilkdownCompiler {
             const frontmatter = parsed.attributes
             const markdownBody = parsed.body
             
-            // Only compile published articles
-            if (frontmatter.status !== 'published') {
-                console.log(`⏭️  Skipping ${filename} (status: ${frontmatter.status || 'unknown'})`)
-                return
-            }
+            // All files pushed to GitHub should be compiled
+            // (draft management is handled in the CMS, not in the repository)
             
             console.log(`🔄 Compiling ${filename}...`)
             

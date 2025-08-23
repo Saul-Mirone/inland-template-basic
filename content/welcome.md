@@ -1,7 +1,6 @@
 ---
 title: Welcome to Your New Blog
 date: 2025-08-22
-status: published
 excerpt: Welcome to your new blog powered by Inland! This is your first article.
 ---
 

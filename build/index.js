@@ -96,9 +96,9 @@ class BlogBuilder {
           // All content files should be pre-compiled HTML from milkdown compiler
           const article = await this.parseCompiledArticle(content, file)
           
-          if (article.frontmatter.status === 'published') {
-            articles.push(article)
-          }
+          // All files pushed to GitHub should be included in the build
+          // (draft management is handled in the CMS, not in the repository)
+          articles.push(article)
         } catch (error) {
           console.warn(`⚠️ Failed to process ${file}:`, error.message)
         }
