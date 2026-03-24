@@ -8,13 +8,13 @@
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
-    <meta property="og:url" content="{{url}}/articles/{{article.slug}}.html">
+    <meta property="og:url" content="{{url}}/{{article.slug}}/">
     <meta property="og:title" content="{{article.title}} - {{name}}">
     <meta property="og:description" content="{{article.excerpt}}">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{url}}/articles/{{article.slug}}.html">
+    <meta property="twitter:url" content="{{url}}/{{article.slug}}/">
     <meta property="twitter:title" content="{{article.title}} - {{name}}">
     <meta property="twitter:description" content="{{article.excerpt}}">
     
@@ -76,14 +76,14 @@
 <nav class="article-navigation">
     <div class="nav-links">
         {{#prevArticle}}
-        <a href="{{slug}}.html" class="nav-link nav-prev">
+        <a href="../{{slug}}/" class="nav-link nav-prev">
             <span class="nav-label">← Previous</span>
             <span class="nav-title">{{title}}</span>
         </a>
         {{/prevArticle}}
         
         {{#nextArticle}}
-        <a href="{{slug}}.html" class="nav-link nav-next">
+        <a href="../{{slug}}/" class="nav-link nav-next">
             <span class="nav-label">Next →</span>
             <span class="nav-title">{{title}}</span>
         </a>

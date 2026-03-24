@@ -62,7 +62,7 @@ class BlogBuilder {
   async cleanDist() {
     await fs.rm(DIST_DIR, { recursive: true, force: true })
     await ensureDir(DIST_DIR)
-    await ensureDir(path.join(DIST_DIR, 'articles'))
+    // Article directories are created per-article in generateArticlePages
   }
 
   async copyAssets() {
@@ -252,8 +252,9 @@ template/
         }
       })
       
-      const outputPath = path.join(DIST_DIR, 'articles', `${article.slug}.html`)
-      await fs.writeFile(outputPath, html, 'utf-8')
+      const articleDir = path.join(DIST_DIR, article.slug)
+      await ensureDir(articleDir)
+      await fs.writeFile(path.join(articleDir, 'index.html'), html, 'utf-8')
     }
   }
 
@@ -279,7 +280,7 @@ template/
     
     const rssItems = articles.slice(0, 20).map(article => {
       const pubDate = new Date(article.frontmatter.date).toUTCString()
-      const link = `${this.siteConfig.url}/articles/${article.slug}.html`
+      const link = `${this.siteConfig.url}/${article.slug}/`
       
       return `
     <item>
