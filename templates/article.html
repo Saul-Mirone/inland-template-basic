@@ -77,9 +77,10 @@
 
             {{#author}}
             <div class="bio">
+                <img class="bio-avatar" src="../avatar.png" alt="{{author}}" />
                 <div class="bio-text">
-                    <strong><a href="../">{{author}}</a></strong>
-                    <span>{{description}}</span>
+                    <p>Personal blog by <strong><a href="../">{{author}}</a></strong>.</p>
+                    {{#description}}<p>{{description}}</p>{{/description}}
                 </div>
             </div>
             {{/author}}
@@ -91,7 +92,7 @@
             <div class="footer-links">
                 <a href="../rss.xml">rss</a>
             </div>
-            <span>Powered by <a href="https://github.com/pureink/inland" target="_blank" rel="noopener">Inland</a></span>
+            <span>Powered by <a href="https://github.com/Saul-Mirone/inland" target="_blank" rel="noopener">Inland</a></span>
         </div>
     </footer>
 

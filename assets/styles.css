@@ -172,9 +172,18 @@ a:hover {
   line-height: 1.6;
 }
 
+.bio-text p {
+  margin: 0;
+}
+
 .bio-text strong a {
   color: var(--color-primary);
   font-weight: 600;
+  text-decoration: none;
+}
+
+.bio-text strong a:hover {
+  text-decoration: underline;
 }
 
 /* Articles list */
