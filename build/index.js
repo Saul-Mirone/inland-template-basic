@@ -277,27 +277,34 @@ template/
 
   async generateRSSFeed(articles) {
     console.log('📡 Generating RSS feed...')
-    
+
     const rssItems = articles.slice(0, 20).map(article => {
       const pubDate = new Date(article.frontmatter.date).toUTCString()
       const link = `${this.siteConfig.url}/${article.slug}/`
-      
+
       return `
     <item>
       <title><![CDATA[${article.frontmatter.title}]]></title>
       <description><![CDATA[${article.frontmatter.excerpt || ''}]]></description>
+      <content:encoded><![CDATA[${article.html}]]></content:encoded>
       <link>${link}</link>
-      <guid>${link}</guid>
+      <guid isPermaLink="true">${link}</guid>
       <pubDate>${pubDate}</pubDate>
     </item>`
     }).join('')
 
+    const escapeXml = (str) => str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+
     const rss = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>${this.siteConfig.name}</title>
-    <description>${this.siteConfig.description}</description>
+    <title>${escapeXml(this.siteConfig.name)}</title>
+    <description>${escapeXml(this.siteConfig.description)}</description>
     <link>${this.siteConfig.url}</link>
+    <atom:link href="${this.siteConfig.url}/rss.xml" rel="self" type="application/rss+xml" />
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <language>en-US</language>${rssItems}
   </channel>

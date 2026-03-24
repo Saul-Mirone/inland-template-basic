@@ -18,6 +18,9 @@
     <meta property="twitter:title" content="{{article.title}} - {{name}}">
     <meta property="twitter:description" content="{{article.excerpt}}">
 
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="{{name}}" href="{{url}}/rss.xml">
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Serif:wght@400;700&family=Space+Mono&display=swap" rel="stylesheet">
 
@@ -79,7 +82,7 @@
             <div class="bio">
                 <img class="bio-avatar" src="../avatar.png" alt="{{author}}" />
                 <div class="bio-text">
-                    <p>Personal blog by <strong><a href="../">{{author}}</a></strong>.</p>
+                    <p><strong><a href="../">{{author}}</a></strong></p>
                     {{#description}}<p>{{description}}</p>{{/description}}
                 </div>
             </div>
