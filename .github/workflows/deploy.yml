@@ -52,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: compiled-content
-          path: content/
+          path: .compiled/
 
   # Step 2: Build static site
   build:
@@ -66,12 +66,12 @@ jobs:
         name: Install pnpm
         with:
           run_install: false
-        
+
       - name: Download compiled content
         uses: actions/download-artifact@v4
         with:
           name: compiled-content
-          path: content/
+          path: .compiled/
           
       - name: Setup Node.js
         uses: actions/setup-node@v4

@@ -72,7 +72,13 @@ class DevServer {
     try {
       console.log('🔄 Rebuilding...')
       
-      // Import and run the build script
+      // Compile markdown then build static site
+      const { MilkdownCompiler } = await import(
+        `./milkdown-compiler.js?${Date.now()}`
+      )
+      const compiler = new MilkdownCompiler()
+      await compiler.compile()
+
       const { BlogBuilder } = await import(`./index.js?${Date.now()}`)
       const builder = new BlogBuilder()
       await builder.build()
@@ -99,8 +105,22 @@ class DevServer {
         return
       }
       
-      const fullPath = path.join(DIST_DIR, filePath)
-      
+      let fullPath = path.join(DIST_DIR, filePath)
+
+      // If path ends with / or has no extension, try index.html
+      if (filePath.endsWith('/')) {
+        fullPath = path.join(fullPath, 'index.html')
+      } else if (!path.extname(filePath)) {
+        try {
+          const stat = await fs.stat(fullPath)
+          if (stat.isDirectory()) {
+            fullPath = path.join(fullPath, 'index.html')
+          }
+        } catch {
+          // not a directory, try as file
+        }
+      }
+
       try {
         const content = await fs.readFile(fullPath)
         const mimeType = mimeTypes.lookup(fullPath) || 'text/plain'

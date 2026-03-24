@@ -151,7 +151,7 @@ async function renderMarkdown(markdown) {
 }
 
 class MilkdownCompiler {
-  constructor(inputDir = 'content', outputDir = 'content') {
+  constructor(inputDir = 'content', outputDir = '.compiled') {
     this.inputDir = inputDir
     this.outputDir = outputDir
   }
@@ -238,7 +238,7 @@ async function main() {
   const args = process.argv.slice(2)
 
   let inputDir = 'content'
-  let outputDir = 'content'
+  let outputDir = '.compiled'
 
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--input' && args[i + 1]) {

@@ -14,7 +14,7 @@ import { copyAssets, ensureDir, formatDate } from './utils.js'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT_DIR = path.join(__dirname, '..')
 const DIST_DIR = path.join(ROOT_DIR, 'dist')
-const CONTENT_DIR = path.join(ROOT_DIR, 'content')
+const CONTENT_DIR = path.join(ROOT_DIR, '.compiled')
 
 class BlogBuilder {
   constructor() {
