@@ -24,7 +24,8 @@ class BlogBuilder {
       description: '{{SITE_DESCRIPTION}}',
       url: 'https://{{GITHUB_USERNAME}}.github.io/{{SITE_NAME_SLUG}}',
       author: '{{SITE_AUTHOR}}',
-      avatarUrl: 'https://github.com/{{GITHUB_USERNAME}}.png'
+      avatarUrl: 'https://github.com/{{GITHUB_USERNAME}}.png',
+      authorUrl: 'https://github.com/{{GITHUB_USERNAME}}'
     }
   }
 
