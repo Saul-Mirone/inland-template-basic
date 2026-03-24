@@ -23,7 +23,8 @@ class BlogBuilder {
       name: '{{SITE_NAME}}',
       description: '{{SITE_DESCRIPTION}}',
       url: 'https://{{GITHUB_USERNAME}}.github.io/{{SITE_NAME_SLUG}}',
-      author: '{{SITE_AUTHOR}}'
+      author: '{{SITE_AUTHOR}}',
+      avatarUrl: 'https://github.com/{{GITHUB_USERNAME}}.png'
     }
   }
 
