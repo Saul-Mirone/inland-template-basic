@@ -26,11 +26,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Apply ratio to image blocks
+    // Apply ratio and caption to image blocks
     document.querySelectorAll('img[data-type="image-block"]').forEach(function(img) {
         var ratio = parseFloat(img.getAttribute('ratio'))
+        var caption = img.getAttribute('caption')
+
+        var figure = document.createElement('figure')
+        figure.className = 'image-block-figure'
         if (ratio && ratio > 0 && ratio <= 1) {
-            img.style.width = (ratio * 100) + '%'
+            figure.style.width = (ratio * 100) + '%'
+        }
+
+        img.parentNode.insertBefore(figure, img)
+        figure.appendChild(img)
+
+        if (caption) {
+            var figcaption = document.createElement('figcaption')
+            figcaption.textContent = caption
+            figure.appendChild(figcaption)
         }
     })
 
