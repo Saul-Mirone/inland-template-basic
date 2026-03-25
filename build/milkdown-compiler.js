@@ -114,6 +114,9 @@ const { Editor, defaultValueCtx, rootCtx } = await import(
 const { commonmark } = await import('@milkdown/kit/preset/commonmark')
 const { gfm } = await import('@milkdown/kit/preset/gfm')
 const { getHTML } = await import('@milkdown/kit/utils')
+const { imageBlockSchema, remarkImageBlockPlugin } = await import(
+  '@milkdown/kit/component/image-block'
+)
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -140,6 +143,8 @@ async function renderMarkdown(markdown) {
     })
     .use(commonmark)
     .use(gfm)
+    .use(remarkImageBlockPlugin)
+    .use(imageBlockSchema)
 
   await editor.create()
 

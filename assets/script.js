@@ -26,6 +26,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Apply ratio to image blocks
+    document.querySelectorAll('img[data-type="image-block"]').forEach(function(img) {
+        var ratio = parseFloat(img.getAttribute('ratio'))
+        if (ratio && ratio > 0 && ratio <= 1) {
+            img.style.width = (ratio * 100) + '%'
+        }
+    })
+
     // Copy button for code blocks
     var codeBlocks = document.querySelectorAll('pre code')
     codeBlocks.forEach(function(block) {

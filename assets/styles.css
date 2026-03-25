@@ -410,6 +410,11 @@ a:hover {
   border-radius: 4px;
 }
 
+.article-content img[data-type="image-block"] {
+  display: block;
+  margin: 1rem auto;
+}
+
 .article-content table {
   width: 100%;
   border-collapse: collapse;
