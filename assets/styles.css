@@ -1,52 +1,52 @@
 /* Inland Blog Template — matches CMS editor styling */
 
 :root {
-  /* Milkdown Crepe frame theme tokens */
+  /* Milkdown Crepe nord theme tokens */
   --color-bg: #ffffff;
-  --color-text: #000000;
-  --color-surface: #f7f7f7;
-  --color-surface-low: #ededed;
-  --color-on-surface: #1c1c1c;
-  --color-on-surface-variant: #4d4d4d;
-  --color-outline: #a8a8a8;
-  --color-primary: #333333;
-  --color-secondary: #cfcfcf;
+  --color-text: #1b1c1d;
+  --color-surface: #f8f9ff;
+  --color-surface-low: #f2f3fa;
+  --color-on-surface: #191c20;
+  --color-on-surface-variant: #43474e;
+  --color-outline: #73777f;
+  --color-primary: #37618e;
+  --color-secondary: #d7e3f8;
   --color-inline-code: #ba1a1a;
-  --color-inline-area: #cacaca;
-  --color-selected: #d5d5d5;
-  --color-hover: #e0e0e0;
+  --color-inline-area: #d8dae0;
+  --color-selected: #e1e2e8;
+  --color-hover: #eceef4;
 
   /* CMS shadcn neutral tokens */
   --color-muted: oklch(0.556 0 0);
   --color-border: oklch(0.922 0 0);
-  --color-accent: oklch(0.205 0 0);
+  --color-accent: #37618e;
 
-  /* Fonts — match Milkdown Crepe */
-  --font-title: 'Noto Serif', Cambria, 'Times New Roman', Times, serif;
-  --font-default: 'Geist Variable', 'Noto Sans', Arial, Helvetica, sans-serif;
-  --font-code: 'Space Mono', 'Fira Code', Menlo, Monaco, 'Courier New',
-    Courier, monospace;
+  /* Fonts — match Milkdown Crepe nord theme */
+  --font-title: Rubik, Cambria, 'Times New Roman', Times, serif;
+  --font-default: Inter, Arial, Helvetica, sans-serif;
+  --font-code: 'JetBrains Mono', Menlo, Monaco, 'Courier New', Courier,
+    monospace;
 }
 
 .dark {
-  /* Milkdown Crepe frame-dark theme tokens */
-  --color-bg: #1a1a1a;
-  --color-text: #e6e6e6;
-  --color-surface: #121212;
-  --color-surface-low: #1c1c1c;
-  --color-on-surface: #d1d1d1;
-  --color-on-surface-variant: #a9a9a9;
-  --color-outline: #757575;
-  --color-primary: #b5b5b5;
-  --color-secondary: #4d4d4d;
-  --color-inline-code: #ff6666;
-  --color-inline-area: #2b2b2b;
-  --color-selected: #2f2f2f;
-  --color-hover: #232323;
+  /* Milkdown Crepe nord-dark theme tokens */
+  --color-bg: #1b1c1d;
+  --color-text: #f8f9ff;
+  --color-surface: #111418;
+  --color-surface-low: #191c20;
+  --color-on-surface: #e1e2e8;
+  --color-on-surface-variant: #c3c6cf;
+  --color-outline: #8d9199;
+  --color-primary: #a1c9fd;
+  --color-secondary: #3c4858;
+  --color-inline-code: #ffb4ab;
+  --color-inline-area: #111418;
+  --color-selected: #32353a;
+  --color-hover: #1d2024;
 
-  --color-muted: #a9a9a9;
-  --color-border: #2f2f2f;
-  --color-accent: #b5b5b5;
+  --color-muted: #8d9199;
+  --color-border: #32353a;
+  --color-accent: #a1c9fd;
 }
 
 * {
@@ -340,7 +340,7 @@ a:hover {
   color: var(--color-muted);
 }
 
-/* Article content — matches Milkdown Crepe ProseMirror rendering */
+/* Article content — matches Milkdown Crepe nord theme rendering */
 .article-content {
   padding: 1rem 0;
   color: var(--color-text);
