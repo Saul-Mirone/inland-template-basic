@@ -2,6 +2,7 @@
 title: Welcome to Your New Blog
 date: 2025-08-22
 excerpt: Welcome to your new blog powered by Inland! This is your first article.
+tags: [welcome, inland]
 ---
 
 Congratulations! You've successfully created your new blog using **Inland**.

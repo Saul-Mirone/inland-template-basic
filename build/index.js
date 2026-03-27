@@ -47,10 +47,13 @@ class BlogBuilder {
       
       // 5. Generate index page
       await this.generateIndexPage(articles)
-      
-      // 6. Generate RSS feed
+
+      // 6. Generate tag pages
+      await this.generateTagPages(articles)
+
+      // 7. Generate RSS feed
       await this.generateRSSFeed(articles)
-      
+
       console.log('✅ Build completed successfully!')
       console.log(`📁 Generated ${articles.length} articles`)
       console.log(`📍 Output directory: ${DIST_DIR}`)
@@ -165,7 +168,7 @@ class BlogBuilder {
   parseFrontmatter(text) {
     const frontmatter = {}
     const lines = text.split('\n')
-    
+
     for (const line of lines) {
       const match = line.match(/^(\w+):\s*(.+)$/)
       if (match) {
@@ -173,7 +176,16 @@ class BlogBuilder {
         frontmatter[key] = value.replace(/^["']|["']$/g, '') // Remove quotes
       }
     }
-    
+
+    // Parse tags: handle "[tag1, tag2]" or "tag1, tag2" into an array
+    if (frontmatter.tags) {
+      const raw = frontmatter.tags.replace(/^\[|\]$/g, '')
+      frontmatter.tags = raw
+        .split(',')
+        .map((t) => t.trim().replace(/^['"]|['"]$/g, ''))
+        .filter(Boolean)
+    }
+
     return frontmatter
   }
 
@@ -186,8 +198,9 @@ class BlogBuilder {
         content: `---
 title: Welcome to Your New Blog
 date: ${new Date().toISOString().split('T')[0]}
-status: published
 excerpt: Welcome to your new blog powered by Inland! This is your first article.
+tags: [welcome, inland]
+status: published
 ---
 
 # Welcome to Your New Blog
@@ -242,14 +255,22 @@ template/
 
   async generateArticlePages(articles) {
     console.log('📄 Generating article pages...')
-    
+
     for (const article of articles) {
+      const tags = this.tagLinksForArticle(article)
+      const { date, updatedAt } = article.frontmatter
+      const formattedUpdatedAt =
+        updatedAt && updatedAt !== date ? formatDate(updatedAt) : null
       const html = await this.templateEngine.render('article', {
         ...this.siteConfig,
         article: {
           ...article.frontmatter,
+          tags,
+          slug: article.slug,
           content: article.html,
-          formattedDate: formatDate(article.frontmatter.date),
+          excerpt: article.frontmatter.excerpt || '',
+          formattedDate: formatDate(date),
+          formattedUpdatedAt,
           isCompiled: article.isCompiled || false
         }
       })
@@ -265,6 +286,7 @@ template/
     
     const recentArticles = articles.slice(0, 10).map(article => ({
       ...article.frontmatter,
+      tags: this.tagLinksForArticle(article),
       slug: article.slug,
       formattedDate: formatDate(article.frontmatter.date)
     }))
@@ -275,6 +297,65 @@ template/
     })
     
     await fs.writeFile(path.join(DIST_DIR, 'index.html'), html, 'utf-8')
+  }
+
+  collectTags(articles) {
+    const tagMap = new Map()
+    for (const article of articles) {
+      const tags = article.frontmatter.tags
+      if (!Array.isArray(tags)) continue
+      for (const tag of tags) {
+        const slug = tag.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+        if (!tagMap.has(slug)) {
+          tagMap.set(slug, { name: tag, slug, articles: [] })
+        }
+        tagMap.get(slug).articles.push(article)
+      }
+    }
+    return tagMap
+  }
+
+  tagLinksForArticle(article) {
+    const tags = article.frontmatter.tags
+    if (!Array.isArray(tags)) return []
+    return tags.map((tag) => {
+      const slug = tag.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+      return { name: tag, slug }
+    })
+  }
+
+  async generateTagPages(articles) {
+    const tagMap = this.collectTags(articles)
+    if (tagMap.size === 0) return
+
+    console.log(`🏷️  Generating ${tagMap.size} tag pages...`)
+
+    const tagsDir = path.join(DIST_DIR, 'tags')
+    await ensureDir(tagsDir)
+
+    for (const [slug, tagData] of tagMap) {
+      const tagArticles = tagData.articles.map((article) => ({
+        ...article.frontmatter,
+        slug: article.slug,
+        formattedDate: formatDate(article.frontmatter.date),
+        tags: this.tagLinksForArticle(article, tagMap).map((t) => ({
+          ...t,
+          active: t.slug === slug,
+        })),
+      }))
+
+      const html = await this.templateEngine.render('tag', {
+        ...this.siteConfig,
+        tag: tagData.name,
+        count: tagData.articles.length,
+        countLabel: tagData.articles.length === 1 ? 'article' : 'articles',
+        articles: tagArticles,
+      })
+
+      const tagDir = path.join(tagsDir, slug)
+      await ensureDir(tagDir)
+      await fs.writeFile(path.join(tagDir, 'index.html'), html, 'utf-8')
+    }
   }
 
   async generateRSSFeed(articles) {

@@ -226,9 +226,67 @@ a:hover {
   color: var(--color-primary);
 }
 
+.article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .article-date {
   font-size: 0.875rem;
   color: var(--color-muted);
+}
+
+.article-updated {
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+.article-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  background: var(--color-surface-low);
+  color: var(--color-on-surface-variant);
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.article-tag:hover {
+  background: var(--color-hover);
+  color: var(--color-on-surface);
+}
+
+.article-tag-active {
+  background: var(--color-primary);
+  color: var(--color-bg);
+}
+
+/* Tag page */
+.tag-header {
+  margin-bottom: 2rem;
+}
+
+.tag-title {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+}
+
+.tag-count {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+.article-description {
+  font-size: 0.95rem;
+  color: var(--color-on-surface-variant);
+  margin-top: 0.5rem;
+  line-height: 1.6;
 }
 
 .article-excerpt {
@@ -263,6 +321,10 @@ a:hover {
   color: var(--color-text);
   margin-bottom: 0.75rem;
   line-height: 50px;
+}
+
+.article-header .article-meta {
+  margin-top: 0.5rem;
 }
 
 .article-header .article-date {

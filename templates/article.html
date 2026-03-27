@@ -11,6 +11,9 @@
     <meta property="og:url" content="{{url}}/{{article.slug}}/">
     <meta property="og:title" content="{{article.title}} - {{name}}">
     <meta property="og:description" content="{{article.excerpt}}">
+    {{#article.tags}}
+    <meta property="article:tag" content="{{.}}">
+    {{/article.tags}}
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
@@ -56,7 +59,18 @@
         <div class="container">
             <header class="article-header">
                 <h1 class="article-title">{{article.title}}</h1>
-                <time datetime="{{article.date}}" class="article-date">{{article.formattedDate}}</time>
+                <div class="article-meta">
+                    <time datetime="{{article.date}}" class="article-date">{{article.formattedDate}}</time>
+                    {{#article.formattedUpdatedAt}}
+                    <span class="article-updated">Updated {{article.formattedUpdatedAt}}</span>
+                    {{/article.formattedUpdatedAt}}
+                    {{#article.tags}}
+                    <a href="../tags/{{slug}}/" class="article-tag">{{name}}</a>
+                    {{/article.tags}}
+                </div>
+                {{#article.excerpt}}
+                <p class="article-description">{{article.excerpt}}</p>
+                {{/article.excerpt}}
             </header>
 
             <div class="article-content">
