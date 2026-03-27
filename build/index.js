@@ -299,13 +299,17 @@ template/
     await fs.writeFile(path.join(DIST_DIR, 'index.html'), html, 'utf-8')
   }
 
+  tagSlug(tag) {
+    return tag.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+  }
+
   collectTags(articles) {
     const tagMap = new Map()
     for (const article of articles) {
       const tags = article.frontmatter.tags
       if (!Array.isArray(tags)) continue
       for (const tag of tags) {
-        const slug = tag.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+        const slug = this.tagSlug(tag)
         if (!tagMap.has(slug)) {
           tagMap.set(slug, { name: tag, slug, articles: [] })
         }
@@ -318,10 +322,7 @@ template/
   tagLinksForArticle(article) {
     const tags = article.frontmatter.tags
     if (!Array.isArray(tags)) return []
-    return tags.map((tag) => {
-      const slug = tag.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
-      return { name: tag, slug }
-    })
+    return tags.map((tag) => ({ name: tag, slug: this.tagSlug(tag) }))
   }
 
   async generateTagPages(articles) {
