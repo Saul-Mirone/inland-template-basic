@@ -6,6 +6,7 @@
  */
 
 import fs from 'fs/promises'
+import { readFileSync } from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { TemplateEngine } from './template-engine.js'
@@ -19,13 +20,23 @@ const CONTENT_DIR = path.join(ROOT_DIR, '.compiled')
 class BlogBuilder {
   constructor() {
     this.templateEngine = new TemplateEngine()
-    this.siteConfig = {
-      name: '{{SITE_NAME}}',
-      description: '{{SITE_DESCRIPTION}}',
-      url: 'https://{{GITHUB_USERNAME}}.github.io/{{SITE_NAME_SLUG}}',
-      author: '{{SITE_AUTHOR}}',
-      avatarUrl: 'https://github.com/{{GITHUB_USERNAME}}.png',
-      authorUrl: 'https://github.com/{{GITHUB_USERNAME}}'
+    this.siteConfig = this.loadSiteConfig()
+  }
+
+  loadSiteConfig() {
+    const configPath = path.join(ROOT_DIR, 'inland.config.json')
+    try {
+      const raw = readFileSync(configPath, 'utf-8')
+      return JSON.parse(raw)
+    } catch {
+      return {
+        name: 'My Blog',
+        description: '',
+        url: '',
+        author: '',
+        avatarUrl: '',
+        authorUrl: '',
+      }
     }
   }
 

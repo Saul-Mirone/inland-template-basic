@@ -43,7 +43,8 @@ class DevServer {
       path.join(ROOT_DIR, 'content'),
       path.join(ROOT_DIR, 'templates'),
       path.join(ROOT_DIR, 'assets'),
-      path.join(ROOT_DIR, 'build')
+      path.join(ROOT_DIR, 'build'),
+      path.join(ROOT_DIR, 'inland.config.json')
     ], {
       ignored: /node_modules/,
       persistent: true

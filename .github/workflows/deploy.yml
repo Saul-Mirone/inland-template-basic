@@ -8,6 +8,7 @@ on:
       - 'templates/**'
       - 'assets/**'
       - 'build/**'
+      - 'inland.config.json'
       - '.github/workflows/**'
   workflow_dispatch:
 
