@@ -117,6 +117,28 @@ const { getHTML } = await import('@milkdown/kit/utils')
 const { imageBlockSchema, remarkImageBlockPlugin } = await import(
   '@milkdown/kit/component/image-block'
 )
+import { createHighlighter } from 'shiki'
+
+const highlighter = await createHighlighter({
+  themes: ['github-light', 'github-dark'],
+  langs: [
+    'javascript',
+    'typescript',
+    'jsx',
+    'tsx',
+    'html',
+    'css',
+    'json',
+    'markdown',
+    'bash',
+    'shell',
+    'yaml',
+    'python',
+    'rust',
+    'go',
+    'sql',
+  ],
+})
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -126,6 +148,35 @@ async function ensureDir(dirPath) {
   } catch {
     await fs.mkdir(dirPath, { recursive: true })
   }
+}
+
+/**
+ * Applies Shiki syntax highlighting to all <pre data-language="...">
+ * code blocks in the given HTML string.
+ */
+function highlightCodeBlocks(html) {
+  const loadedLangs = highlighter.getLoadedLanguages()
+  return html.replace(
+    /<pre data-language="([^"]*)"[^>]*><code>([\s\S]*?)<\/code><\/pre>/g,
+    (_, lang, code) => {
+      const plainText = code
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&')
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+      const resolvedLang = loadedLangs.includes(lang)
+        ? lang
+        : 'text'
+      return highlighter.codeToHtml(plainText, {
+        themes: {
+          light: 'github-light',
+          dark: 'github-dark',
+        },
+      lang: resolvedLang,
+      })
+    }
+  )
 }
 
 /**
@@ -152,7 +203,7 @@ async function renderMarkdown(markdown) {
 
   await editor.destroy()
 
-  return html
+  return highlightCodeBlocks(html)
 }
 
 class MilkdownCompiler {

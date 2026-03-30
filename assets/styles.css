@@ -417,17 +417,30 @@ a:hover {
 }
 
 .article-content pre {
-  background: color-mix(in srgb, var(--color-inline-area), transparent 40%);
   padding: 10px;
   border-radius: 4px;
   overflow-x: auto;
   margin: 8px 0;
 }
 
+/* Shiki dual-theme: dark mode overrides inline light colors */
+.dark .article-content pre.shiki {
+  background-color: var(--shiki-dark-bg) !important;
+  color: var(--shiki-dark) !important;
+}
+
+.dark .article-content pre.shiki span {
+  color: var(--shiki-dark) !important;
+}
+
+/* Fallback for non-highlighted code blocks */
+.article-content pre:not(.shiki) {
+  background: color-mix(in srgb, var(--color-inline-area), transparent 40%);
+}
+
 .article-content pre code {
   padding: 0;
   background: transparent;
-  color: var(--color-text);
   display: block;
   font-size: 0.875rem;
   line-height: 1.6;

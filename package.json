@@ -24,7 +24,8 @@
     "front-matter": "^4.0.2",
     "jsdom": "^29.0.1",
     "mime-types": "^2.1.35",
-    "mustache": "^4.2.0"
+    "mustache": "^4.2.0",
+    "shiki": "^4.0.2"
   },
   "devDependencies": {
     "serve": "^14.2.1"
