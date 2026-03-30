@@ -419,8 +419,9 @@ a:hover {
 .article-content pre {
   padding: 10px;
   border-radius: 4px;
-  overflow-x: auto;
   margin: 8px 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 /* Shiki dual-theme: dark mode overrides inline light colors */
