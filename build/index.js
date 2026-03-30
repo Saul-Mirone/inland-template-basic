@@ -21,6 +21,7 @@ class BlogBuilder {
   constructor() {
     this.templateEngine = new TemplateEngine()
     this.siteConfig = this.loadSiteConfig()
+    this.buildVersion = Date.now().toString(36)
   }
 
   loadSiteConfig() {
@@ -274,6 +275,7 @@ template/
         updatedAt && updatedAt !== date ? formatDate(updatedAt) : null
       const html = await this.templateEngine.render('article', {
         ...this.siteConfig,
+        v: this.buildVersion,
         article: {
           ...article.frontmatter,
           tags,
@@ -304,6 +306,7 @@ template/
     
     const html = await this.templateEngine.render('index', {
       ...this.siteConfig,
+      v: this.buildVersion,
       articles: recentArticles
     })
     
@@ -358,6 +361,7 @@ template/
 
       const html = await this.templateEngine.render('tag', {
         ...this.siteConfig,
+        v: this.buildVersion,
         tag: tagData.name,
         count: tagData.articles.length,
         countLabel: tagData.articles.length === 1 ? 'article' : 'articles',
